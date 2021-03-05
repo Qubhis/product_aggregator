@@ -20,29 +20,19 @@ flask_app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DB_URI")
 # avoid sqlalchemy warning
 flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# celery config
-# flask_app.config["CELERY_BROKER_BACKEND"] = "sqla+sqlite:///celery_broker.db"
-# flask_app.config[
-#     "CELERY_CACHE_BACKEND"
-# ] = f"db+{flask_app.config['SQLALCHEMY_DATABASE_URI']}"
-# flask_app.config[
-#     "CELERY_RESULT_BACKEND"
-# ] = f"db+{flask_app.config['SQLALCHEMY_DATABASE_URI']}"
 
 # instantiate db
 initialize_db(flask_app)
 # instantiate flask_restful
 api = Api(flask_app)
-
 # adding routes to our app
 initialize_routes(api)
 
 # create celery
 celery_app = make_celery_app(flask_app)
 
-from celeryapp.tasks import update_db_with_offers
 from resources.product import fetch_products_from_db
-from external.offers import get_offers
+from external.offers import get_offers, update_db_with_offers
 
 
 @celery_app.on_after_configure.connect
@@ -52,6 +42,7 @@ def setup_periodic_tasks(sender, **kwargs):
 
 @celery_app.task(name="update_offers")
 def update_offers():
+    # TODO: replace print with logging functions
     load_dotenv(dotenv_path=find_dotenv(".env"))
     print("Let's look if there are new prices...")
     products = fetch_products_from_db()

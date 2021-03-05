@@ -1,5 +1,5 @@
-from database.models import db, Offer, Product
 from app import flask_app
+from database.models import db, Offer, Product
 
 
 # NOTE: to be run only when db doesn't exist

@@ -3,7 +3,7 @@
 ### Navigate to the app folder and create virtual environment (venv)
 
 ```
-venv venv
+python -m venv venv
 ```
 
 ### Activate virtual environment (venv)
@@ -39,5 +39,5 @@ python app.py
 ### Run celery scheduler:
 
 ```
-celery -A app beat -l DEBUG
+celery -A app beat -l INFO
 ```

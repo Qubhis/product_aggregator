@@ -13,7 +13,7 @@ def test_post_product_missing_name():
     data = response.get_json()
 
     assert response.status_code == 400
-    assert data["error"] == "Name and Description must be provided"
+    assert data["message"] == "Name and Description must be provided"
 
 
 def test_post_product_missing_description():
@@ -26,4 +26,4 @@ def test_post_product_missing_description():
     data = response.get_json()
 
     assert response.status_code == 400
-    assert data["error"] == "Name and Description must be provided"
+    assert data["message"] == "Name and Description must be provided"

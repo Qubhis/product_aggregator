@@ -11,7 +11,7 @@ from external.offers import register_product
 
 def _400_product_missing_body_parameter():
     return Response(
-        response=json.dumps({"error": "Name and Description must be provided"}),
+        response=json.dumps({"message": "Name and Description must be provided"}),
         mimetype="application/json",
         status=400,
     )
@@ -40,18 +40,12 @@ def fetch_products_from_db():
 
 
 class Products(Resource):
-    # def get(self):
-    #     # returns list of products from db
-    #     products = [product.id for product in Product.query.all()]
-    #     return Response(
-    #         response=json.dumps(products), mimetype="application/json", status=200
-    #     )
-
     def post(self):
         # get data from request
         body = request.get_json()
         name = body.get("name")
         description = body.get("description")
+
         if name is None or description is None:
             return _400_product_missing_body_parameter()
 
@@ -100,6 +94,7 @@ class ProductManage(Resource):
         request_body = request.get_json()
         name = request_body.get("name")
         description = request_body.get("description")
+
         if name:
             product.name = name
         if description:
