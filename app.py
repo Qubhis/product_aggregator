@@ -45,10 +45,8 @@ def setup_periodic_tasks(sender, **kwargs):
 
 @celery_app.task(name="update_offers")
 def update_offers():
-    # # TODO: replace print with logging functions
-    # load_dotenv(dotenv_path=find_dotenv(".env"))
     logger.info("Fetching products from db")
-    # print("Let's look if there are new prices...")
+
     products = fetch_products_from_db()
     if not products:
         logger.info("But there are no products...\nEnding task")
