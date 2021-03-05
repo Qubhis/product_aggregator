@@ -33,6 +33,9 @@ celery_app = make_celery_app(flask_app)
 
 from resources.product import fetch_products_from_db
 from external.offers import get_offers, update_db_with_offers
+from celery.utils.log import get_task_logger
+
+logger = get_task_logger(__name__)
 
 
 @celery_app.on_after_configure.connect
@@ -42,27 +45,32 @@ def setup_periodic_tasks(sender, **kwargs):
 
 @celery_app.task(name="update_offers")
 def update_offers():
-    # TODO: replace print with logging functions
-    load_dotenv(dotenv_path=find_dotenv(".env"))
-    print("Let's look if there are new prices...")
+    # # TODO: replace print with logging functions
+    # load_dotenv(dotenv_path=find_dotenv(".env"))
+    logger.info("Fetching products from db")
+    # print("Let's look if there are new prices...")
     products = fetch_products_from_db()
     if not products:
-        print("But there are no products...")
+        logger.info("But there are no products...\nEnding task")
         return
 
     for product_id in products:
         # call offers to get offer
         response = get_offers(product_id)
         # skip update if no offers
-        if response.status_code != 200 or not response.json():
-            print(response.text)
+        if response.status_code != 200:
+            logger.info(f"{response.text}\nProduct not updated")
+            continue
+        if not response.json():
+            logger.info("No new offers. Product not updated")
             continue
 
         if not update_db_with_offers(product_id=product_id, offers=response.json()):
-            print(f"offers couldn't be updated for product {product_id}")
+            logger.info(f"offers couldn't be updated for product {product_id}")
+            logger.info("Skipping the product...")
             continue
 
-        print(f"Product {product_id} got new prices!")
+        logger.info(f"Product {product_id} got new prices!")
 
 
 if __name__ == "__main__":

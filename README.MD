@@ -27,7 +27,7 @@ python create_db.py
 ### Run celery worker:
 
 ```
-celery -A app worker --loglevel=info --concurrency 1 -P solo
+celery -A app worker -f celery_worker.log --loglevel=info  --concurrency 1 -P solo
 ```
 
 ### Start Flask app:
@@ -39,5 +39,5 @@ python app.py
 ### Run celery scheduler:
 
 ```
-celery -A app beat -l INFO
+celery -A app beat -f celery_beat.log --loglevel=info
 ```
