@@ -67,7 +67,7 @@ http://127.0.0.1:5000/api
 
 ### Getting access token - POST /auth
 
-```json
+```
 Headers: none
 Request: none
 Response:
@@ -79,7 +79,7 @@ Response:
 
 ### Register product POST /products
 
-```json
+```
 Headers: Authorization: Bearer <jwt-token>
 Request:
 {
@@ -108,7 +108,7 @@ Response:
 
 ### Update existing product PUT /product/<:id:>
 
-```json
+```
 Headers: Authorization: Bearer <jwt-token>
 Request: id of product in path
 {
@@ -136,7 +136,7 @@ Response:
 
 ### Delete existing product DELETE /product/<:id:>
 
-```json
+```
 Headers: Authorization: Bearer <jwt-token>
 Request: id of product in path
 Response:
