@@ -1,9 +1,7 @@
-import json
 import os
 import requests
 
 from dotenv import find_dotenv, load_dotenv
-from flask import Response
 
 from database.db import db
 from database.models import Offer
