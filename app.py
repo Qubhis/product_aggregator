@@ -3,6 +3,7 @@ import os
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask
 from flask_restful import Api
+from flask_jwt_extended import JWTManager
 
 from celeryapp.celeryapp import make_celery_app
 from external.token import get_and_set_offers_service_token
@@ -16,6 +17,7 @@ load_dotenv(dotenv_path=find_dotenv(".env"))
 flask_app = Flask(__name__)
 # configure app
 flask_app.config["SECRECT_KEY"] = os.getenv("FLASK_SECRET_KEY")
+flask_app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 flask_app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DB_URI")
 # avoid sqlalchemy warning
 flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -27,6 +29,9 @@ initialize_db(flask_app)
 api = Api(flask_app)
 # adding routes to our app
 initialize_routes(api)
+
+# JWT
+jwt = JWTManager(flask_app)
 
 # create celery
 celery_app = make_celery_app(flask_app)

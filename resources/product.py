@@ -1,6 +1,7 @@
 import json
 
 from flask import Response, request
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 from sqlalchemy import exc
 
@@ -40,6 +41,7 @@ def fetch_products_from_db():
 
 
 class Products(Resource):
+    @jwt_required()
     def post(self):
         # get data from request
         body = request.get_json()
@@ -85,6 +87,7 @@ class Products(Resource):
 
 
 class ProductManage(Resource):
+    @jwt_required()
     def put(self, product_id):
         # check if product exists
         product = Product.query.filter_by(id=product_id).first()
@@ -111,6 +114,7 @@ class ProductManage(Resource):
             response=json.dumps(data), mimetype="application/json", status=200
         )
 
+    @jwt_required()
     def delete(self, product_id):
         # check if product exists
         product = Product.query.filter_by(id=product_id).first()
