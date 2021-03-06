@@ -40,8 +40,8 @@ class OfferTrend(Resource):
         for offer in history_offers:
             data["offers"].append(
                 {
-                    "datetime": offer.timestamp.strftime(DATETIME_FORMAT),
                     "price": offer.price,
+                    "timestamp": offer.timestamp.strftime(DATETIME_FORMAT),
                 }
             )
         # calculate trend
