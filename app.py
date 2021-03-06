@@ -48,7 +48,7 @@ logger = get_task_logger(__name__)
 
 @celery_app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(60.0, update_offers.s(), expires=30)
+    sender.add_periodic_task(60.0, update_offers.s(), expires=60)
 
 
 @celery_app.task(name="update_offers")
