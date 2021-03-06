@@ -4,6 +4,8 @@ Backend practice
 
 ## Requirements
 
+Python 3.8
+
 You must create ".env" file in the app folder prior to running this service. The file must contain:
 
 ```
@@ -154,7 +156,8 @@ Response:
 }
 ```
 
-### Get Price trends for last N minutes 
+### Get Price trends for last N minutes
+
 ### GET /product/<product_id>/offer/<offer_if>/trend/<:minutes>
 
 ```
