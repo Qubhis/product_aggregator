@@ -19,6 +19,8 @@ flask_app = Flask(__name__)
 # configure app
 flask_app.config["SECRECT_KEY"] = os.getenv("FLASK_SECRET_KEY")
 flask_app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+flask_app.config["JWT_TOKEN_LOCATION"] = "headers"
+flask_app.config["JWT_HEADER_TYPE"] = ""
 flask_app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DB_URI")
 # avoid sqlalchemy warning
 flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -46,7 +48,7 @@ logger = get_task_logger(__name__)
 
 @celery_app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(60.0, update_offers.s())
+    sender.add_periodic_task(60.0, update_offers.s(), expires=30)
 
 
 @celery_app.task(name="update_offers")
