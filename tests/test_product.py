@@ -12,7 +12,7 @@ def test_post_product_missing_name():
 
     response = flask_app.test_client().post(
         "/api/products",
-        headers={"Authorization": f"Bearer {access_token}"},
+        headers={"Authorization": access_token},
         data=json.dumps({"description": "Some description"}),
         content_type="application/json",
     )
@@ -30,7 +30,7 @@ def test_post_product_missing_description():
 
     response = flask_app.test_client().post(
         "/api/products",
-        headers={"Authorization": f"Bearer {access_token}"},
+        headers={"Authorization": access_token},
         data=json.dumps({"name": "Some name"}),
         content_type="application/json",
     )
