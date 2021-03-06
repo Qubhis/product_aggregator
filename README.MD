@@ -154,7 +154,8 @@ Response:
 }
 ```
 
-### Get Price trends for last N minutes GET /product/<product_id>/offer/<offer_if>/trend/<:minutes>
+### Get Price trends for last N minutes 
+### GET /product/<product_id>/offer/<offer_if>/trend/<:minutes>
 
 ```
 Headers: Authorization: Bearer <jwt-token>
