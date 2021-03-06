@@ -9,8 +9,8 @@ class Product(db.Model):
 
 
 class Offer(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    offers_ms_id = db.Column(db.Integer, nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), primary_key=True)
+    offers_ms_id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, primary_key=True)
     price = db.Column(db.Integer, nullable=False)
     items_in_stock = db.Column(db.Integer)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)

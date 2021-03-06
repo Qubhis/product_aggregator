@@ -50,17 +50,20 @@ def get_offers(product_id) -> requests.Response:
     return response
 
 
-def update_db_with_offers(product_id, offers):
+def update_db_with_offers(product_id, offers, timestamp):
     # add/update offer in db
     for offer in offers:
         # check db first
-        existing_offer = Offer.query.filter_by(offers_ms_id=offer["id"]).first()
+        existing_offer = Offer.query.filter_by(
+            product_id=product_id, offers_ms_id=offer["id"], timestamp=timestamp
+        ).first()
         if not existing_offer:
             new_offer = Offer(
-                price=offer["price"],
-                offers_ms_id=offer["id"],
-                items_in_stock=offer["items_in_stock"],
                 product_id=product_id,
+                offers_ms_id=offer["id"],
+                timestamp=timestamp,
+                price=offer["price"],
+                items_in_stock=offer["items_in_stock"],
             )
             db.session.add(new_offer)
         else:

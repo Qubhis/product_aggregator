@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from dotenv import find_dotenv, load_dotenv
@@ -67,8 +68,12 @@ def update_offers():
         if not response.json():
             logger.info("No new offers. Product not updated")
             continue
+        # prepare timestamp
+        timestamp = datetime.datetime.utcnow()
 
-        if not update_db_with_offers(product_id=product_id, offers=response.json()):
+        if not update_db_with_offers(
+            product_id=product_id, offers=response.json(), timestamp=timestamp
+        ):
             logger.info(f"offers couldn't be updated for product {product_id}")
             logger.info("Skipping the product...")
             continue
