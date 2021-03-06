@@ -106,7 +106,7 @@ Response:
 }
 ```
 
-### Update existing product PUT /product/<:id:>
+### Update existing product PUT /product/<:id>
 
 ```
 Headers: Authorization: Bearer <jwt-token>
@@ -134,7 +134,7 @@ Response:
 }
 ```
 
-### Delete existing product DELETE /product/<:id:>
+### Delete existing product DELETE /product/<:id>
 
 ```
 Headers: Authorization: Bearer <jwt-token>
@@ -143,6 +143,27 @@ Response:
 200 OK
 {
     "message": <message>
+}
+401 UNAUTHORIZED
+{
+    "msg": <message>
+}
+404 NOT FOUND
+{
+    "message": <message>
+}
+```
+
+### Get Price trends for last N minutes GET /product/<product_id>/offer/<offer_if>/trend/<:minutes>
+
+```
+Headers: Authorization: Bearer <jwt-token>
+Request: product id, offer id, number of minutes provided in path
+Response:
+200 OK
+{
+    "offers": {"price": <price>, "timestamp": <datetime>},
+    "percentage_increase": <price increase in percents>
 }
 401 UNAUTHORIZED
 {
