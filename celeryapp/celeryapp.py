@@ -1,10 +1,11 @@
+import os
 from celery import Celery
 
 
 def make_celery_app(flask_app):
     celery = Celery(
         flask_app.import_name,
-        broker="redis://localhost:6379/0",
+        broker=os.getenv("CELERY_BROKER_URI"),
     )
 
     class ContextTask(celery.Task):
