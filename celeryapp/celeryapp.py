@@ -4,7 +4,7 @@ from celery import Celery
 def make_celery_app(flask_app):
     celery = Celery(
         flask_app.import_name,
-        broker="sqla+sqlite:///celery_broker.db",
+        broker="redis://localhost:6379/0",
     )
 
     class ContextTask(celery.Task):

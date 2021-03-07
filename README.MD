@@ -15,30 +15,43 @@ JWT_SECRET_KEY="<secret_key>"
 SQLALCHEMY_DB_URI="sqlite:///database.db"  - change path as you wish
 ```
 
-## Windows - install and run
-
+## Linux install and run
 Navigate to the app folder and create virtual environment (venv) - optional
 
 ```
-python -m venv venv
+python3 -m venv venv
 ```
 
 Activate virtual environment (venv) - optional
 
 ```
-venv\scripts\activate.bat
+source venv/bin/activate
+```
+Install Redis
+```
+sudo apt-get install redis-server
+```
+open redis client and set Redis user
+```
+redis-cli
+ > set user:1 "Aggregator"
+ > exit
+```
+Re-start Redis server
+```
+sudo service redis-server restart
 ```
 
 Install dependencies
 
 ```
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Create db file
 
 ```
-python create_db.py
+python3 create_db.py
 ```
 
 Run celery worker:
@@ -50,7 +63,7 @@ celery -A app worker -f celery_worker.log --loglevel=info  --concurrency 1 -P so
 Start Flask app:
 
 ```
-python app.py
+python3 app.py
 ```
 
 Run celery scheduler:
