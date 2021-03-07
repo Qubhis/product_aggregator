@@ -1,0 +1,41 @@
+services:
+  flask:
+    container_name: flask
+    build:
+      context: '.'
+    env_file:
+      - '.env'
+    ports:
+      - '5000:5000'
+    command: bash -c "python3 create_db.py && python3 app.py"
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+
+  worker:
+    build:
+      context: '.'
+    hostname: worker
+    command: celery -A app worker -f celery_worker.log --loglevel=info  --concurrency 1 -P solo
+    volumes:
+      - .:/app
+    links:
+      - redis
+    depends_on:
+      - redis
+
+  scheduler:
+    build:
+      context: '.'
+    command: celery -A app beat -f celery_beat.log --loglevel=info
+    volumes:
+      - .:/app
+    links:
+      - redis
+    depends_on:
+      - redis
+

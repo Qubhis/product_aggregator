@@ -86,5 +86,5 @@ def update_offers():
 if __name__ == "__main__":
     if get_and_set_offers_service_token() is False:
         raise TimeoutError("Service is not available")
-    # FIXME: remove debug before releasing !
-    flask_app.run(debug=True)
+
+    flask_app.run(host="0.0.0.0")
