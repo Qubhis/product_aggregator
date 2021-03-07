@@ -14,15 +14,15 @@ DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
 class OfferTrend(Resource):
     @jwt_required()
-    def get(self, product_id, offers_ms_id, minutes):
+    def get(self, product_id, offer_id, minutes):
         # determine from - to
         datetime_to = datetime.datetime.utcnow()
         datetime_from = datetime_to - datetime.timedelta(minutes=minutes)
         # get offers
         history_offers = (
             Offer.query.filter(
+                Offer.id == offer_id,
                 Offer.product_id == product_id,
-                Offer.offers_ms_id == offers_ms_id,
                 Offer.timestamp >= datetime_from.strftime(DATETIME_FORMAT),
                 Offer.timestamp <= datetime_to.strftime(DATETIME_FORMAT),
             )

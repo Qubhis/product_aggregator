@@ -9,5 +9,5 @@ def initialize_routes(api):
     api.add_resource(ProductManage, "/api/product/<int:product_id>")
     api.add_resource(
         OfferTrend,
-        "/api/product/<int:product_id>/offer/<int:offers_ms_id>/trend/<int:minutes>",
+        "/api/product/<int:product_id>/offer/<int:offer_id>/trend/<int:minutes>",
     )

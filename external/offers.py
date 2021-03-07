@@ -55,12 +55,12 @@ def update_db_with_offers(product_id, offers, timestamp):
     for offer in offers:
         # check db first
         existing_offer = Offer.query.filter_by(
-            product_id=product_id, offers_ms_id=offer["id"], timestamp=timestamp
+            id=offer["id"], product_id=product_id, timestamp=timestamp
         ).first()
         if not existing_offer:
             new_offer = Offer(
+                id=offer["id"],
                 product_id=product_id,
-                offers_ms_id=offer["id"],
                 timestamp=timestamp,
                 price=offer["price"],
                 items_in_stock=offer["items_in_stock"],
