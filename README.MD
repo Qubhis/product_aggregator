@@ -12,7 +12,15 @@ You must create ".env" file in the app folder prior to running this service. The
 OFFERS_BASE_URL="<offers_ms_api_point>"
 FLASK_SECRET_KEY="<secret_key>"
 JWT_SECRET_KEY="<secret_key>"
-SQLALCHEMY_DB_URI="sqlite:///database.db"  - change path as you wish
+SQLALCHEMY_DB_URI="sqlite:///database.db"
+```
+When running locally:
+```
+CELERY_BROKER_URI="redis://localhost:6379/0"
+```
+Docker image
+```
+CELERY_BROKER_URI="redis://redis:6379/0"
 ```
 
 ## Linux install and run
@@ -71,6 +79,12 @@ Run celery scheduler:
 ```
 celery -A app beat -f celery_beat.log --loglevel=info
 ```
+## Docker
+Componse and build
+```
+docker-compose up --build
+```
+
 
 ## API documentation
 

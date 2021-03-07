@@ -24,6 +24,8 @@ flask_app.config["JWT_HEADER_TYPE"] = ""
 flask_app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DB_URI")
 # avoid sqlalchemy warning
 flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# jwt exceptions to be handled -> forcing 4xx reponses
+flask_app.config["PROPAGATE_EXCEPTIONS"] = True
 
 
 # instantiate db
@@ -86,5 +88,5 @@ def update_offers():
 if __name__ == "__main__":
     if get_and_set_offers_service_token() is False:
         raise TimeoutError("Service is not available")
-    # FIXME: remove debug before releasing !
-    flask_app.run(debug=True)
+
+    flask_app.run(host="0.0.0.0")
