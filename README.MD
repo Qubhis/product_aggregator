@@ -109,7 +109,7 @@ Response:
 ### Register product POST /products
 
 ```
-Headers: Authorization: Bearer <jwt-token>
+Headers: Authorization: <jwt-token>
 Request:
 {
     "name": <product name>,
@@ -138,7 +138,7 @@ Response:
 ### Update existing product PUT /product/<:id>
 
 ```
-Headers: Authorization: Bearer <jwt-token>
+Headers: Authorization: <jwt-token>
 Request: id of product in path
 {
     "name": <product name>,
@@ -166,7 +166,7 @@ Response:
 ### Delete existing product DELETE /product/<:id>
 
 ```
-Headers: Authorization: Bearer <jwt-token>
+Headers: Authorization: <jwt-token>
 Request: id of product in path
 Response:
 200 OK
@@ -188,7 +188,7 @@ Response:
 ### GET /product/<product_id>/offer/<offer_if>/trend/<:minutes>
 
 ```
-Headers: Authorization: Bearer <jwt-token>
+Headers: Authorization: <jwt-token>
 Request: product id, offer id, number of minutes provided in path
 Response:
 200 OK
